@@ -1,0 +1,20 @@
+{
+  "name": "x-cable-admin",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/H2OM/x_cable-admin#readme",
+  "bugs": {
+    "url": "https://github.com/H2OM/x_cable-admin/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/H2OM/x_cable-admin.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
