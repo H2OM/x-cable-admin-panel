@@ -1,0 +1,72 @@
+import type {SubmitEvent} from 'react';
+import useAuth from "@hooks/useAuth.tsx";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {userAPI} from "@api";
+import {Button, Card, Form, Input} from "antd";
+
+function UserOutlined() {
+    return null;
+}
+
+function LockOutlined() {
+    return null;
+}
+
+export default function Login() {
+    const {isAuthenticated, login} = useAuth();
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState<boolean>(false);
+
+    useEffect(() => {
+        if(isAuthenticated) navigate("/");
+    }, [isAuthenticated]);
+
+    const handleLogin = async (e: SubmitEvent<HTMLFormElement>) => {
+        const formData = new FormData(e.target);
+
+        setLoading(true);
+
+        const response = await userAPI.login(
+            String(formData.get('login')),
+            String(formData.get('password'))
+        );
+
+        setLoading(false);
+
+        if(!response.success) {
+            return;
+        }
+
+        login(response.token, response.user);
+        navigate("/");
+    }
+
+    return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#f0f2f5' }}>
+            <Card title="Вход в панель управления" style={{ width: 400, boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+                <Form name="login_form" onFinish={handleLogin} layout="vertical">
+                    <Form.Item
+                        name="login"
+                        rules={[{ required: true, message: 'Пожалуйста, введите логин!' }]}
+                    >
+                        <Input prefix={<UserOutlined />} placeholder="Логин" size="large" />
+                    </Form.Item>
+
+                    <Form.Item
+                        name="password"
+                        rules={[{ required: true, message: 'Пожалуйста, введите пароль!' }]}
+                    >
+                        <Input.Password prefix={<LockOutlined />} placeholder="Пароль" size="large" />
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit" size="large" block loading={loading}>
+                            Войти
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Card>
+        </div>
+    )
+}
