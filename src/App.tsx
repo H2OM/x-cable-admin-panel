@@ -6,6 +6,7 @@ import ProtectedRoute from "@components/router/ProtectedRoute.tsx";
 import Login from "@pages/Login.tsx";
 import Main from "@pages/Main.tsx";
 import {AuthProvider} from "@providers/AuthProvider.tsx";
+import MainLayout from "@layouts/MainLayout.tsx";
 
 export default function App() {
     return (
@@ -18,7 +19,9 @@ export default function App() {
 
                         {/* Защищенные маршруты (доступны только после авторизации) */}
                         <Route element={<ProtectedRoute/>}>
-                            <Route path={"/"} element={<Main/>}/>
+                            <Route element={<MainLayout/>}>
+                                <Route path={"/"} element={<Main/>}/>
+                            </Route>
                         </Route>
 
                         {/* Редирект по умолчанию TODO на 404 */}

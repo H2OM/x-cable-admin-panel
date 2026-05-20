@@ -1,6 +1,6 @@
 import {createContext, type ReactNode, useEffect, useState} from "react";
 import type {User} from "@_types/user";
-import {userAPI} from "@api";
+import {authAPI} from "@api";
 import _FETCH from "@utils/_FETCH";
 import type ProviderAuth from "@_types/providers.ts";
 
@@ -19,7 +19,7 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
 
             _FETCH.setToken(token);
 
-            const response = await userAPI.check();
+            const response = await authAPI.check();
 
             setIsPending(false);
 

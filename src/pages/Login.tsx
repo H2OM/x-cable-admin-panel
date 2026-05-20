@@ -1,8 +1,7 @@
-import type {SubmitEvent} from 'react';
 import useAuth from "@hooks/useAuth.tsx";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {userAPI} from "@api";
+import {authAPI} from "@api";
 import {Button, Card, Form, Input} from "antd";
 
 function UserOutlined() {
@@ -22,14 +21,12 @@ export default function Login() {
         if(isAuthenticated) navigate("/");
     }, [isAuthenticated]);
 
-    const handleLogin = async (e: SubmitEvent<HTMLFormElement>) => {
-        const formData = new FormData(e.target);
-
+    const handleLogin = async (values: any) => {
         setLoading(true);
 
-        const response = await userAPI.login(
-            String(formData.get('login')),
-            String(formData.get('password'))
+        const response = await authAPI.login(
+            values.login,
+            values.password,
         );
 
         setLoading(false);
@@ -38,7 +35,7 @@ export default function Login() {
             return;
         }
 
-        login(response.token, response.user);
+        login(response.data.token, response.data.user);
         navigate("/");
     }
 
