@@ -7,6 +7,7 @@ import Login from "@pages/Login.tsx";
 import Main from "@pages/Main.tsx";
 import {AuthProvider} from "@providers/AuthProvider.tsx";
 import MainLayout from "@layouts/MainLayout.tsx";
+import Parser from "@pages/Parser.tsx";
 
 export default function App() {
     return (
@@ -21,6 +22,7 @@ export default function App() {
                         <Route element={<ProtectedRoute/>}>
                             <Route element={<MainLayout/>}>
                                 <Route path={"/"} element={<Main/>}/>
+                                <Route path={"/parser"} element={<Parser/>}/>
                             </Route>
                         </Route>
 

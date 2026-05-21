@@ -6,7 +6,8 @@ import {
     DashboardOutlined,
     ShoppingOutlined,
     MenuUnfoldOutlined,
-    MenuFoldOutlined
+    MenuFoldOutlined,
+    DownloadOutlined
 } from '@ant-design/icons';
 import {Link, Outlet, useLocation} from 'react-router-dom';
 import useAuth from "@hooks/useAuth.tsx";
@@ -46,6 +47,11 @@ export default function MainLayout() {
             icon: <ShoppingOutlined/>,
             label: <Link to="/products">Товары</Link>,
         },
+        {
+            key: '/parser',
+            icon: <DownloadOutlined/>,
+            label: <Link to="/parser">Парсер товаров</Link>,
+        }
     ];
 
     return (

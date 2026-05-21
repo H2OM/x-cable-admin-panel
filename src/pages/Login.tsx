@@ -21,7 +21,7 @@ export default function Login() {
         if(isAuthenticated) navigate("/");
     }, [isAuthenticated]);
 
-    const handleLogin = async (values: any) => {
+    const handleLogin = async (values: Record<string, string>) => {
         setLoading(true);
 
         const response = await authAPI.login(
