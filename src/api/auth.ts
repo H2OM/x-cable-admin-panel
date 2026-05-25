@@ -1,4 +1,4 @@
-import _FETCH from "../utils/_FETCH.ts";
+import _FETCH from "@utils/_FETCH.ts";
 
 const API_URL = `${import.meta.env.VITE_PUBLIC_API_URL}/admin-auth`;
 
@@ -7,8 +7,11 @@ export const check = async () => {
 }
 
 export const login = async (login: string, password: string) => {
-    return await _FETCH.request({url: `${API_URL}/login`, options: {
-        method: "POST",
-        body: JSON.stringify({login, password})
-    }});
+    return await _FETCH.progressTrackingRequest({
+        url: `${API_URL}/login`,
+        options: {
+            method: "POST",
+            body: JSON.stringify({login, password})
+        }
+    });
 }

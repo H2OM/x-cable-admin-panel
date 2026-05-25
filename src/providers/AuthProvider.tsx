@@ -12,10 +12,10 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
     const [isPending, setIsPending] = useState<boolean>(true);
 
     useEffect(() => {
-        (async ()=> {
+        (async () => {
             const token = localStorage.getItem("admin_token");
 
-            if(!token) return setIsPending(false);
+            if (!token) return setIsPending(false);
 
             _FETCH.setToken(token);
 
@@ -23,7 +23,7 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
 
             setIsPending(false);
 
-            if(!response.success) {
+            if (!response.success) {
                 return logout();
             }
 
@@ -40,7 +40,7 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
         setIsAuthenticated(true);
     }
 
-    const logout = () => {
+    function logout() {
         localStorage.removeItem("admin_token");
 
         setUser(null);

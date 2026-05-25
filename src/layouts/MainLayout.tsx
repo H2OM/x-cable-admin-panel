@@ -1,22 +1,19 @@
 import {useState} from 'react';
-import {Layout, Menu, Avatar, Dropdown, Space, Button} from 'antd';
+import {Layout, Avatar, Dropdown, Space, Button} from 'antd';
 import {
     UserOutlined,
     LogoutOutlined,
-    DashboardOutlined,
-    ShoppingOutlined,
     MenuUnfoldOutlined,
     MenuFoldOutlined,
-    DownloadOutlined
 } from '@ant-design/icons';
-import {Link, Outlet, useLocation} from 'react-router-dom';
-import useAuth from "@hooks/useAuth.tsx";
+import {Outlet} from 'react-router-dom';
+import useAuth from "@hooks/useAuth.ts";
+import Side from "@components/layout/Side.tsx";
 
-const {Header, Sider, Content, Footer} = Layout;
+const {Header, Content, Footer} = Layout;
 
 export default function MainLayout() {
     const {user, logout} = useAuth();
-    const location = useLocation();
     const [collapsed, setCollapsed] = useState(false);
 
     const profileMenu = {
@@ -36,52 +33,9 @@ export default function MainLayout() {
         ],
     };
 
-    const menuItems = [
-        {
-            key: '/dashboard',
-            icon: <DashboardOutlined/>,
-            label: <Link to="/dashboard">Главная панель</Link>,
-        },
-        {
-            key: '/products',
-            icon: <ShoppingOutlined/>,
-            label: <Link to="/products">Товары</Link>,
-        },
-        {
-            key: '/parser',
-            icon: <DownloadOutlined/>,
-            label: <Link to="/parser">Парсер товаров</Link>,
-        }
-    ];
-
     return (
         <Layout style={{minHeight: '100vh'}}>
-            <Sider trigger={null} collapsible collapsed={collapsed} theme="light"
-                   style={{boxShadow: '2px 0 8px 0 rgba(29,35,41,.05)'}}>
-                <div style={{
-                    height: 64,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: collapsed ? 'center' : 'flex-start',
-                    padding: '0 24px',
-                    borderBottom: '1px solid #f0f0f0',
-                    fontWeight: 'bold',
-                    fontSize: 18,
-                    color: 'var(--main-color)',
-                    overflow: 'hidden',
-                    whiteSpace: 'nowrap'
-                }}>
-                    {collapsed ? 'X_C' : 'X_CABLE.PANEL'}
-                </div>
-
-                <Menu theme="light"
-                      mode="inline"
-                      selectedKeys={[location.pathname]}
-                      items={menuItems}
-                      style={{borderRight: 0, marginTop: 16}}
-                />
-            </Sider>
-
+            <Side collapsed={collapsed}/>
             <Layout>
                 <Header style={{
                     padding: '0 24px',

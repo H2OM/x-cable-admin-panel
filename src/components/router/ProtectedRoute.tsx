@@ -1,17 +1,24 @@
-import useAuth from "@hooks/useAuth.tsx";
-import {Spin} from "antd";
 import {Navigate, Outlet} from "react-router-dom";
+import useAuth from "@hooks/useAuth.ts";
+import {useEffect} from "react";
+import {notification} from "antd";
+import {notificationConfig} from "@constants/notificationConfig.ts";
 
-export default function ProtectedRoute() {
-    const { isAuthenticated, isPending } = useAuth();
+export default function ProtectedRoute({permission} : { permission: string }) {
+    const {user, isPending} = useAuth();
+    const isRightPermission = isPending || user?.permissions.find(perm => {
+       return perm.code === '*' || perm.code === permission;
+    });
 
-    if (isPending) {
-        return (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                <Spin size="large" description={"Проверка авторизации..."} />
-            </div>
-        );
-    }
+    useEffect(() => {
+        if(!isRightPermission) {
+            notification.error({
+                title: 'Недостаточно прав!',
+                ...notificationConfig
+            });
+        }
+    }, [isRightPermission]);
 
-    return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
+    return isRightPermission ? <Outlet /> : <Navigate to="/" replace />;
+
 }

@@ -1,4 +1,4 @@
-import useAuth from "@hooks/useAuth.tsx";
+import useAuth from "@hooks/useAuth.ts";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {authAPI} from "@api";

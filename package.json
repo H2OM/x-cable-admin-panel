@@ -11,12 +11,14 @@
   },
   "dependencies": {
     "antd": "^6.4.3",
+    "debounce": "^3.0.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-router-dom": "^7.15.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/debounce": "^1.2.4",
     "@types/node": "^24.12.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",

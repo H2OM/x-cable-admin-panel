@@ -1,0 +1,14 @@
+.admin-search-select {
+    flex: 1;
+    flex-shrink: 0;
+    .ant-select-selection-item {
+        max-width: 500px !important;
+        padding-right: 4px;
+
+        .ant-select-selection-item-content {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+}

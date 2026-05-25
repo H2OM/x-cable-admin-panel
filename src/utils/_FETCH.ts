@@ -1,3 +1,8 @@
+import {notification} from 'antd';
+import {notificationConfig} from "@constants/notificationConfig.ts";
+import {LoadingOutlined} from "@ant-design/icons";
+import {createElement} from "react";
+
 let token: string | null = null;
 
 const setToken = (newToken: string | null) => {
@@ -11,7 +16,11 @@ const cleanRequest = async ({url, options = {method: "GET"}}: {
 }) => {
     return await fetch(url, options)
         .catch(() => {
-            // toast.error("Ошибка запроса");
+            notification.error({
+                title: 'Ошибка запроса!',
+                ...notificationConfig
+            });
+
             return false;
         });
 }
@@ -33,12 +42,20 @@ const fileRequest = async ({url, options = {method: "GET"}, toasts = false}: {
     const blob = await RESPONSE.blob();
 
     if (!(blob instanceof Blob)) {
-        // toast.error("Ошибка запроса");
+        notification.error({
+            title: 'Ошибка запроса!',
+            ...notificationConfig
+        });
 
         return false;
     }
 
-    // toasts && toast.success("Файл успешно получен");
+    if(toasts) {
+        notification.success({
+            title: 'Файл успешно получен!',
+            ...notificationConfig
+        });
+    }
 
     const disposition = RESPONSE.headers.get('Content-Disposition');
     let filename = 'file.txt';
@@ -86,10 +103,15 @@ const request = async ({
         .then(response => response.json())
         .then(data => {
             if (!data || !data.success) {
-                throw new Error(data.message ?? `Ошибка в получении данных с сервера.`);
+                throw new Error(data.message ?? `Ошибка в получении данных с сервера!`);
             }
 
-            // toastSuccess && toast.success(typeof toastSuccess === 'string' ? toastSuccess : data.message ?? 'Успешно!');
+            if(toastSuccess) {
+                notification.success({
+                    title: typeof toastSuccess === 'string' ? toastSuccess : data.message ?? 'Успешно!',
+                    ...notificationConfig
+                });
+            }
 
             return data;
         })
@@ -102,51 +124,74 @@ const request = async ({
                         ? error.message
                         : "Ошибка в получении данных!"));
 
-            // toastError && toast.error(MESSAGE);
+            if(toastError) {
+                notification.error({
+                    title: MESSAGE,
+                    ...notificationConfig
+                });
+            }
 
             return {success: false, message: MESSAGE};
         });
 }
 
-// const progressTrackingRequest = async ({
-//     url,
-//     options = {method: "GET"},
-//     loading,
-//     success,
-//     error
-// }: {
-//     url: string;
-//     options?: RequestInit;
-//     loading?: string;
-//     success?: string;
-//     error?: string;
-// }) => {
-//     if(token) {
-//         options.headers = {
-//             ...options.headers,
-//             "Authorization": `Bearer ${token}`
-//         }
-//     }
-//
-//     options.headers = {
-//         ...options.headers,
-//         'Content-Type': 'application/json'
-//     }
+const progressTrackingRequest = async ({
+    url,
+    options = {method: "GET"},
+    loading,
+    success,
+    error
+}: {
+    url: string;
+    options?: RequestInit;
+    loading?: string;
+    success?: string;
+    error?: string;
+}) => {
+    if(token) {
+        options.headers = {
+            ...options.headers,
+            "Authorization": `Bearer ${token}`
+        }
+    }
 
-//     return toast.promise(
-//         fetch(url, options)
-//             .then(response => response.json())
-//             .then(data => {
-//                 if (!data || !data.success) throw new Error(data.message);
-//
-//                 return data;
-//             }),
-//         {
-//             loading: loading ?? 'Загрузка...',
-//             success: data => success ?? data.message ?? 'Успешно!',
-//             error: e => error ?? e.message ?? 'Ошибка загрузки данных!'
-//         },
-//     ).catch(error => ({success: false, message: error.message}));
-// }
+    options.headers = {
+        ...options.headers,
+        'Content-Type': 'application/json'
+    }
 
-export default {setToken, request, cleanRequest, fileRequest};
+    notification.open({
+        ...notificationConfig,
+        key: url,
+        title: loading ?? 'Получение данных...',
+        duration: 0,
+        icon: createElement(LoadingOutlined)
+    });
+
+    return await fetch(url, options)
+        .then(response => response.json())
+        .then(data => {
+            if (!data || !data.success) throw new Error(data.message);
+
+            notification.success({
+                ...notificationConfig,
+                key: url,
+                title: success ?? data.message ?? 'Успешно!',
+                duration: 3
+            });
+
+            return data;
+        })
+        .catch(e => {
+            notification.error({
+                ...notificationConfig,
+                key: url,
+                title: error ?? e.message ?? 'Ошибка загрузки данных!',
+                duration: 3
+            });
+
+            return {success: false, message: e.message}
+        });
+}
+
+export default {setToken, progressTrackingRequest, request, cleanRequest, fileRequest};
