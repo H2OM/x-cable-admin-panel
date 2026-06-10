@@ -8,10 +8,10 @@ interface SelectOption {
 }
 
 export default function TagSearchSelect({
-                                            callback,
-                                            placeholder = "Введите название или выберите тег...",
-                                            style
-                                        }: {
+    callback,
+    placeholder = "Введите название или выберите тег...",
+    style
+}: {
     callback: (query: string) => Promise<Record<string, unknown>>;
     placeholder?: string;
     style?: CSSProperties;

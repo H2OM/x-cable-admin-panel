@@ -1,11 +1,11 @@
 import {Typography} from "antd";
 
-export default function Main() {
+export default function ProductAdd() {
     return (
         <div>
             <Typography.Title level={2} style={{margin: 0, marginBottom: '30px'}}>
-                Главная
+                Добавление товара
             </Typography.Title>
         </div>
-    )
+    );
 }

@@ -3,8 +3,9 @@ import {EditOutlined, EllipsisOutlined, DeleteOutlined, ExportOutlined} from "@a
 import {useEffect, useState} from "react";
 import type {Product} from "@/types/products.ts";
 import {productsAPI} from "@api";
-import {useSearchParams} from "react-router-dom";
+import {Link, useSearchParams} from "react-router-dom";
 
+const SITE_URL = import.meta.env.VITE_PUBLIC_SITE_URL;
 const IMAGES_URL = import.meta.env.VITE_PUBLIC_SITE_IMAGES_URL;
 
 export default function ProductsTable() {
@@ -67,7 +68,7 @@ export default function ProductsTable() {
                 Все товары
             </Typography.Title>
             <List
-                grid={{gutter: [16, 24], xs: 1, sm: 2, md: 3, lg: 4}}
+                grid={{gutter: ['10px', '10px'], xs: 1, sm: 1, md: 2, lg: 3, xl: 4, xxl: 5, xxxl: 5}}
                 dataSource={loading
                     ? Array.from({length: limit}).map((_, i) => ({id: i} as Product))
                     : products
@@ -83,13 +84,13 @@ export default function ProductsTable() {
                     onChange: handlePageChange
                 }}
                 renderItem={(product) => (
-                    <List.Item>
+                    <List.Item style={{ margin: 0 }}>
                         {loading ? (
-                            <Card style={{width: 400, height: '320px'}}>
+                            <Card style={{width: '100%', height: '320px'}}>
                                 <Skeleton active paragraph={{rows: 3}}/>
                             </Card>
                         ) : (
-                            <Card style={{ width: 400 }}
+                            <Card style={{width: '100%'}}
                                 cover={
                                     <img
                                         draggable={false}
@@ -99,8 +100,8 @@ export default function ProductsTable() {
                                     />
                                 }
                                 actions={[
-                                    <ExportOutlined key="link" />,
-                                    <EditOutlined key="edit" />,
+                                    <Link to={`${SITE_URL}/product/${product.id}`}><ExportOutlined key="link" /></Link>,
+                                    <Link to={`/products/edit/${product.id}`}><EditOutlined key="edit" /></Link>,
                                     <Popconfirm
                                         key="delete"
                                         title="Удалить товар?"
@@ -113,10 +114,9 @@ export default function ProductsTable() {
                                     <Button type="text" icon={<EllipsisOutlined key="ellipsis" />}/>,
                                 ]}
                             >
-                                <Card.Meta
-                                    title={product.title}
-                                />
-                                <br/>
+                                <p className="text-clamp _two-line">
+                                    {product.title}
+                                </p>
                                 <Card.Meta
                                     title={product.price.toLocaleString('ru-RU', {
                                         style: 'currency',
@@ -131,10 +131,10 @@ export default function ProductsTable() {
                                         })}
                                     </p> : null
                                 }
-                                <p>Бренд: {product.brand}</p>
-                                <p>Артикул: {product.article}</p>
-                                <p>Категория: {product.category}</p>
-                                <p>Хит: {product.hit ? 'Да' : 'Нет'}</p>
+                                <p className="text-clamp">Бренд: {product.brand}</p>
+                                <p className="text-clamp">Артикул: {product.article}</p>
+                                <p className="text-clamp">Категория: {product.category}</p>
+                                <p className="text-clamp">Хит: {product.hit ? 'Да' : 'Нет'}</p>
                                 <p className={'stock' + (product.stock > 0 ? ' _in-stock' : ' _out-stock')}>
                                     Наличие: {product.stock} {product.unit}
                                 </p>

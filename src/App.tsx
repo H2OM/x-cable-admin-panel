@@ -11,6 +11,8 @@ import ParserAnlan from "@pages/parsers/ParserAnlan.tsx";
 import ProductsFastActions from "@pages/products/ProductsFastActions.tsx";
 import ProtectedRoute from "@components/router/ProtectedRoute.tsx";
 import ProductsTable from "@pages/products/ProductsTable.tsx";
+import ProductAdd from "@pages/products/ProductAdd.tsx";
+import ProductEdit from "@pages/products/ProductEdit.tsx";
 
 export default function App() {
     return (
@@ -26,10 +28,12 @@ export default function App() {
                             <Route element={<MainLayout/>}>
                                 <Route path={"/"} element={<Main/>}/>
                                 <Route element={<ProtectedRoute permission={'products'}/>}>
-                                    <Route>
-                                        <Route path={"/products"} element={<ProductsTable/>}/>
+                                    <Route path={"/products"} element={<ProductsTable/>}/>
+                                    <Route element={<ProtectedRoute permission={'products.add'}/>}>
+                                        <Route path={"/products/add/"} element={<ProductAdd/>}/>
                                     </Route>
                                     <Route element={<ProtectedRoute permission={'products.edit'}/>}>
+                                        <Route path={"/products/edit/:id"} element={<ProductEdit/>}/>
                                         <Route path={"/products/fast-actions"} element={<ProductsFastActions/>}/>
                                     </Route>
                                 </Route>

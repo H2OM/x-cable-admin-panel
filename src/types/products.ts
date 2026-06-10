@@ -21,4 +21,23 @@ export interface Product {
 export interface ProductVariation {
     id: number;
     image: string;
+    price: number;
+    title: string;
+    article: string;
+}
+
+export interface ProductDetails extends Product {
+    local_filters: ProductLocalFilters[];
+}
+
+export interface ProductLocalFilters {
+    name: string;
+    code: string;
+    values: ProductLocalFilter[];
+}
+
+export interface ProductLocalFilter {
+    name: string;
+    code: string;
+    product_id: number;
 }

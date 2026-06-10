@@ -1,8 +1,8 @@
-import {Button, Card, Form, Space, Typography} from "antd";
-import {CheckOutlined, SwapRightOutlined} from "@ant-design/icons";
-import TagSearchSelect from "@components/ui/TagSearchSelect.tsx";
+import {Typography} from "antd";
+import {SwapRightOutlined} from "@ant-design/icons";
 import {productsAPI} from "@api";
 import {useState} from "react";
+import LinkSearch from "@components/ui/form/LinkSearch.tsx";
 
 export default function ProductsFastActions() {
     const [isPending, setIsPending] = useState<boolean>(false);
@@ -19,41 +19,50 @@ export default function ProductsFastActions() {
     const handlePairVariation = async () => {
 
     };
+
+    const handleOneWayPairRelated = async (values: Record<string, string>) => {
+
+    };
+
+    const handlePairRelated = async (values: Record<string, string>) => {
+
+    };
+
 //TODO!!!
     return (
         <div>
             <Typography.Title level={2} style={{margin: 0, marginBottom: '30px'}}>
                 Быстрые действия с товарами
             </Typography.Title>
-            <Space vertical size={10} style={{width: '100%'}}>
-                <Card title="Односторонняя привязка вариации товара" style={{width: '100%'}}>
-                    <Form onFinish={handleOneWayPairVariation} layout={"inline"} style={{gap: '10px'}}>
-                        <Form.Item name={"id"} style={{margin: 0, flex: 1}}
-                                   rules={[{ message: 'Выберите товар!' }]}>
-                            <TagSearchSelect
-                                callback={productsAPI.searchIds}
-                                placeholder={'Введите имя, артикул или id товара'}
-                            />
-                        </Form.Item>
-                        <SwapRightOutlined />
-                        <Form.Item name={"variation_id"} style={{margin: 0, flex: 1}}
-                                   rules={[{ message: 'Выберите вариацию товара!' }]}>
-                            <TagSearchSelect
-                                callback={productsAPI.searchIds}
-                                placeholder={'Введите имя, артикул или id товара'}
-                            />
-                        </Form.Item>
-                        <Button
-                            type="primary"
-                            htmlType="submit"
-                            size={"large"}
-                            icon={<CheckOutlined />}
-                            loading={isPending}
-                        />
-                    </Form>
-                </Card>
-            </Space>
-
+            <LinkSearch title={"Односторонняя привязка вариации товара"}
+                        placeholder={"Введите имя, артикул или id товара"}
+                        divider={<SwapRightOutlined />}
+                        callback={productsAPI.search}
+                        loading={isPending}
+                        submit={handleOneWayPairVariation}
+            />
+            <br/><br/>
+            <LinkSearch title={"Двустороняя привязка вариации товара"}
+                        placeholder={"Введите имя, артикул или id товара"}
+                        callback={productsAPI.search}
+                        loading={isPending}
+                        submit={handlePairVariation}
+            />
+            <br/><br/>
+            <LinkSearch title={"Односторонняя привязка связанного товара"}
+                        placeholder={"Введите имя, артикул или id товара"}
+                        divider={<SwapRightOutlined />}
+                        callback={productsAPI.search}
+                        loading={isPending}
+                        submit={handleOneWayPairRelated}
+            />
+            <br/><br/>
+            <LinkSearch title={"Двустороняя привязка связанного товара"}
+                        placeholder={"Введите имя, артикул или id товара"}
+                        callback={productsAPI.search}
+                        loading={isPending}
+                        submit={handlePairRelated}
+            />
         </div>
     );
 }

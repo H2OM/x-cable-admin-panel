@@ -6,6 +6,7 @@ import {
     FormOutlined,
     PartitionOutlined,
     PicRightOutlined,
+    PlusSquareOutlined,
     ShoppingOutlined,
     SnippetsOutlined,
     TableOutlined,
@@ -31,6 +32,11 @@ export const menuItems: MenuItems[] = [
                 key: '/products',
                 icon: <TableOutlined/>,
                 label: <Link to="/products">Все товары</Link>,
+            },
+            {
+                key: '/products/add',
+                icon: <PlusSquareOutlined />,
+                label: <Link to="/products/add">Добавление товара</Link>,
             },
             {
                 key: '/products/fast-actions',
