@@ -35,12 +35,23 @@ export const deleteMany = async (ids: number[])=> {
     });
 }
 
-export const oneWayPairVariation = async (data: {
-    id: number;
-    variation_id: number;
+export const update = async (data: FormData) => {
+    return await _FETCH.progressTrackingRequest(({
+        url: `${API_URL}/update`,
+        options: {
+            method: "POST",
+            body: data
+        },
+        json: false
+    }))
+}
+
+export const oneWayPairVariations = async (data: {
+    ids: number[];
+    variations_ids: number[];
 }) => {
     return await _FETCH.progressTrackingRequest({
-        url: `${API_URL}/pair-variation`,
+        url: `${API_URL}/pair-variations`,
         options: {
             method: "POST",
             body: JSON.stringify({...data, one_way: true})
@@ -48,12 +59,12 @@ export const oneWayPairVariation = async (data: {
     });
 }
 
-export const pairVariation = async (data: {
-    id: number;
-    variation_id: number;
+export const pairVariations = async (data: {
+    ids: number[];
+    variations_ids: number[];
 }) => {
     return await _FETCH.progressTrackingRequest({
-        url: `${API_URL}/pair-variation`,
+        url: `${API_URL}/pair-variations`,
         options: {
             method: "POST",
             body: JSON.stringify(data)
@@ -61,3 +72,48 @@ export const pairVariation = async (data: {
     });
 }
 
+export const oneWayPairRelated = async (data: {
+    ids: number[];
+    related_ids: number[];
+}) => {
+    return await _FETCH.progressTrackingRequest({
+        url: `${API_URL}/pair-related`,
+        options: {
+            method: "POST",
+            body: JSON.stringify({...data, one_way: true})
+        }
+    });
+}
+
+export const pairRelated = async (data: {
+    ids: number[];
+    related_ids: number[];
+}) => {
+    return await _FETCH.progressTrackingRequest({
+        url: `${API_URL}/pair-related`,
+        options: {
+            method: "POST",
+            body: JSON.stringify(data)
+        }
+    });
+}
+
+export const makeHit = async (ids: number[]) => {
+    return await changeHit(ids, true);
+
+}
+
+export const excludeHit = async (ids: number[]) => {
+    return await changeHit(ids, false);
+}
+
+export const changeHit = async (ids: number[], status: boolean) => {
+    return await _FETCH.request({
+        url: `${API_URL}/${status ? 'make-hit' : 'exclude-hit'}`,
+        options: {
+            method: "POST",
+            body: JSON.stringify({ids})
+        },
+        toastSuccess: true
+    });
+}

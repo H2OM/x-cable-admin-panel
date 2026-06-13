@@ -95,8 +95,8 @@ const request = async ({
     }
 
     options.headers = {
-        ...options.headers,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        ...options.headers
     }
 
     return await fetch(url, options)
@@ -140,13 +140,15 @@ const progressTrackingRequest = async ({
     options = {method: "GET"},
     loading,
     success,
-    error
+    error,
+    json = true
 }: {
     url: string;
     options?: RequestInit;
     loading?: string;
     success?: string;
     error?: string;
+    json?: boolean;
 }) => {
     if(token) {
         options.headers = {
@@ -155,9 +157,11 @@ const progressTrackingRequest = async ({
         }
     }
 
-    options.headers = {
-        ...options.headers,
-        'Content-Type': 'application/json'
+    if(json) {
+        options.headers = {
+            ...options.headers,
+            'Content-Type': 'application/json'
+        }
     }
 
     notification.open({

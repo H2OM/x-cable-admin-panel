@@ -2,9 +2,12 @@ import {Card, Form, Input, InputNumber, Space, Switch} from "antd";
 import ImageUpload from "@components/ui/form/ImageUpload.tsx";
 import TextArea from "antd/es/input/TextArea";
 
+const IMAGES_URL = import.meta.env.VITE_PUBLIC_SITE_IMAGES_URL;
+
 export default function FormMainInfo() {
     return (
         <Card title="Основная информация" style={{ marginBottom: 24 }}>
+            <Form.Item name="id" rules={[{ required: true }]} hidden />
             <Form.Item
                 label="Наименование"
                 name="title"
@@ -81,12 +84,32 @@ export default function FormMainInfo() {
             </Form.Item>
 
             <Form.Item noStyle dependencies={['slider_images']}>
-                {({getFieldValue}) => {
-                    const images = getFieldValue('slider_images').split(',');
+                {({ getFieldValue }) => {
+                    const sliderImagesString = getFieldValue('slider_images');
+
+                    const initialFileList = sliderImagesString && typeof sliderImagesString === 'string'
+                        ? sliderImagesString.split(',').map((name, i) => ({
+                            uid: `-existing-${i}`,
+                            name: name,
+                            existing: true,
+                            url: `${IMAGES_URL}/${name}`
+                        }))
+                        : [];
 
                     return (
-                        <ImageUpload images={images} label={'Изображения товара'}/>
-                    )
+                        <Form.Item
+                            label="Изображения"
+                            name="images"
+                            valuePropName="fileList"
+                            getValueFromEvent={(e) => {
+                                if (Array.isArray(e)) return e;
+                                return e?.fileList;
+                            }}
+                            initialValue={initialFileList}
+                        >
+                            <ImageUpload/>
+                        </Form.Item>
+                    );
                 }}
             </Form.Item>
             <Form.Item label="Описание" name="description">

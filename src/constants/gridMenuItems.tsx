@@ -12,12 +12,12 @@ export const gridMenuItems: ItemType[] = [
 
 export const selectProductGridMenuItems: ItemType[] = [
     {
-        key: 'pair_variant',
+        key: 'pair_related',
         label: 'Связывание',
         icon:  <SwapOutlined />,
     },
     {
-        key: 'pair_related',
+        key: 'pair_variant',
         label: 'Связывание как вариаций',
         icon:  <SwapOutlined />,
     },

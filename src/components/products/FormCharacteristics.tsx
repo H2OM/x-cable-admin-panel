@@ -4,11 +4,12 @@ import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
 export default function FormCharacteristics() {
     return (
         <Card title="Характеристики товара" style={{ marginBottom: 24 }}>
-            <Form.List name="characteristics">
+            <Form.List name="local_filters">
                 {(fields, { add, remove }) => (
                     <>
                         {fields.map(({ key, name, ...restField }) => (
                             <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                                <Form.Item name={[name, 'value_id']} hidden/>
                                 <Form.Item
                                     {...restField}
                                     name={[name, 'name']}

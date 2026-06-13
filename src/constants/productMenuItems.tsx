@@ -1,29 +1,10 @@
-import type {MenuProps} from "antd";
-import {EditOutlined, DeleteOutlined, EyeOutlined, CopyOutlined} from "@ant-design/icons";
+import {CopyOutlined} from "@ant-design/icons";
+import type {ItemType} from "antd/es/menu/interface";
 
-export const productMenuItems: MenuProps['items'] = [
-    {
-        key: 'view',
-        label: 'Посмотреть на сайте',
-        icon: <EyeOutlined />,
-    },
+export const productMenuItems: ItemType[] = [
     {
         key: 'duplicate',
         label: 'Дублировать товар',
         icon: <CopyOutlined />,
-    },
-    {
-        key: 'edit',
-        label: 'Редактировать',
-        icon: <EditOutlined />,
-    },
-    {
-        type: 'divider',
-    },
-    {
-        key: 'delete',
-        label: 'Удалить',
-        icon: <DeleteOutlined />,
-        danger: true,
-    },
+    }
 ];

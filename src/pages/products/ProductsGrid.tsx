@@ -1,5 +1,4 @@
 import {
-    Button,
     Card,
     Checkbox,
     List,
@@ -10,7 +9,7 @@ import {
     type CheckboxChangeEvent,
     Spin
 } from "antd";
-import {EditOutlined, EllipsisOutlined, DeleteOutlined, ExportOutlined} from "@ant-design/icons";
+import {EditOutlined, DeleteOutlined, ExportOutlined, StarOutlined} from "@ant-design/icons";
 import {useEffect, useState} from "react";
 import type {Product} from "@/types/products.ts";
 import {productsAPI} from "@api";
@@ -18,6 +17,7 @@ import {Link, useSearchParams} from "react-router-dom";
 import {gridMenuItems, selectProductGridMenuItems} from "@constants/gridMenuItems.tsx";
 import SelectActions from "@components/ui/grid/SelectActions.tsx";
 import ContextMenu from "@components/ui/grid/ContextMenu.tsx";
+import {productMenuItems} from "@constants/productMenuItems.tsx";
 
 const SITE_URL = import.meta.env.VITE_PUBLIC_SITE_URL;
 const IMAGES_URL = import.meta.env.VITE_PUBLIC_SITE_IMAGES_URL;
@@ -81,6 +81,29 @@ export default function ProductsGrid() {
         });
     };
 
+    const changeHitStatusHandler = async (productIds: number[], status: boolean) => {
+        const fallback = [...products];
+
+        setProducts(prev => prev.map(p => {
+            if(productIds.includes(p.id)) {
+                return {
+                    ...p,
+                    hit: status ? "1" : "0"
+                }
+            }
+
+            return p;
+        }))
+
+        const response = await productsAPI.changeHit(productIds, status);
+
+        if(!response.success) {
+            setProducts(fallback);
+        }
+
+        return response;
+    }
+
     const deleteProductsHandler = async (ids: number[]) => {
         setLoading(true);
 
@@ -91,30 +114,45 @@ export default function ProductsGrid() {
         if(response.success) {
             setProducts(prev => prev.filter(p => !ids.includes(p.id)));
         }
-    }
 
-    const contextDeleteProductsHandler = async () => {
-        await deleteProductsHandler(selected);
-
-        setSelected([]);
-        setSelectMode(false);
         void fetchProducts();
+
+        return response;
     }
 
-    const pairVariationsHandler = async () => {
+    const selectedAction = async (
+        callback: () => Promise<Record<string, string>>
+    )=> {
+        setLoading(true);
 
+        const response = await callback();
+
+        setLoading(false);
+
+        if(response.success) {
+            setSelected([]);
+            setSelectMode(false);
+        }
+    }
+
+    const pairVariationsHandler = () => {
+        void selectedAction(() => productsAPI.pairVariations({ids: selected, variations_ids: selected}));
     }
 
     const pairRelatedHandler = async () => {
-
+        void selectedAction(() => productsAPI.pairRelated({ids: selected, related_ids: selected}));
     }
 
-    const makeHitHandler = async () => {
-
+    const makeHitHandler = () => {
+        void selectedAction(() => changeHitStatusHandler(selected, true));
     }
 
     const excludeHitHandler = async () => {
+        void selectedAction(() => changeHitStatusHandler(selected, false));
+    }
 
+    const contextDeleteProductsHandler = async () => {
+        void selectedAction(() => deleteProductsHandler(selected));
     }
 
     return (
@@ -202,13 +240,16 @@ export default function ProductsGrid() {
                                     <Popconfirm
                                         key="delete"
                                         title="Удалить товар?"
-                                        onConfirm={() => console.log('Удален:', product.id)}
+                                        onConfirm={() => deleteProductsHandler([product.id])}
                                         okText="Да"
                                         cancelText="Нет"
                                     >
-                                        <DeleteOutlined/>
+                                        <DeleteOutlined style={{color: 'var(--ant-color-error)'}}/>
                                     </Popconfirm>,
-                                    <Button type="text" icon={<EllipsisOutlined key="ellipsis" />}/>,
+                                    <ContextMenu
+                                        menuItems={productMenuItems}
+                                        handlers={{}}
+                                    />
                                 ]}
                             >
                                 {selectMode &&
@@ -224,6 +265,18 @@ export default function ProductsGrid() {
                                         }}
                                     />
                                 }
+                                <StarOutlined
+                                    style={{
+                                        position: "absolute",
+                                        right: 10,
+                                        top: 10,
+                                        color: product.hit === '1' ? 'var(--star-color)' : ''
+                                    }}
+                                    onClick={()=> changeHitStatusHandler(
+                                        [product.id],
+                                        !(Number(product.hit))
+                                    )}
+                                />
                                 <p className="text-clamp _two-line">
                                     {product.title}
                                 </p>

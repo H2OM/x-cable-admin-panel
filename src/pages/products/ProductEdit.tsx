@@ -9,12 +9,13 @@ import {
 import {AppstoreOutlined, ArrowLeftOutlined, LinkOutlined, SaveOutlined, SettingOutlined, TagsOutlined} from "@ant-design/icons";
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import type {Product, ProductDetails} from "@/types/products.ts";
+import type {Product, ProductDetails, ProductLocalFilter} from "@/types/products.ts";
 import {productsAPI} from "@api";
 import {FormVariations} from "@components/products/FormVariations.tsx";
 import FormCharacteristics from "@components/products/FormCharacteristics.tsx";
 import FormMainInfo from "@components/products/FormMainInfo.tsx";
 import FormRelated from "@components/products/FormRelated.tsx";
+import parseToFormData from "@utils/parseToFormData.ts";
 
 export default function ProductEdit() {
     const {id} = useParams();
@@ -38,8 +39,18 @@ export default function ProductEdit() {
         })();
     }, [id]);
 
-    const handleFinish = async (): Promise<void> => {
+    const handleFinish = async (values: Record<string, any>): Promise<void> => {
+        const formData = parseToFormData(values);
 
+        setLoading(true);
+
+        const response = await productsAPI.update(formData);
+
+        setLoading(false);
+
+        if(response.success) {
+            navigate('/products');
+        }
     }
 
     const tabItems = [
@@ -123,17 +134,18 @@ export default function ProductEdit() {
                     onFinish={handleFinish}
                     initialValues={{
                         ...product,
-                        characteristics: product.local_filters.map(filter => {
+                        local_filters: product.local_filters.map(filter => {
                             const value = filter.values.find(
                                 val => val.product_id === product.id
-                            )?.name;
+                            ) as ProductLocalFilter;
 
                             return {
                                 name: filter.name,
-                                value: value
+                                value: value.name,
+                                value_id: value.id
                             }
                         }),
-                        relatedProducts: related
+                        related_products: related
                     }}
                 >
                     <Card style={{ borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>

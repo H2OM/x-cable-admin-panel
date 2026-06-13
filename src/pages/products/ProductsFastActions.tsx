@@ -11,7 +11,7 @@ export default function ProductsFastActions() {
         console.log(values);return;
         setIsPending(true);
 
-        const response = await productsAPI.oneWayPairVariation();
+        const response = await productsAPI.oneWayPairVariations();
 
         setIsPending(false);
     };
