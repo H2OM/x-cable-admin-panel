@@ -187,6 +187,8 @@ const progressTrackingRequest = async ({
             return data;
         })
         .catch(e => {
+            // TODO Если 401 открываем в новом окне форму входа, а лучше отдельное окно браузера
+
             notification.error({
                 ...notificationConfig,
                 key: url,

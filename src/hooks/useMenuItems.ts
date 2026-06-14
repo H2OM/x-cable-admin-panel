@@ -1,4 +1,4 @@
-import {menuItems} from "@constants/menuItems.tsx";
+import {menuItems} from "@constants/menuItems/menuItems.tsx";
 import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 import type {MenuItems} from "@/types/common.ts";

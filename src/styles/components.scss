@@ -12,7 +12,7 @@
         }
     }
 }
-.stock {
+.dot {
     font-size: 12px;
     font-weight: 500;
     display: flex;
@@ -27,16 +27,28 @@
         height: 6px;
         border-radius: 100%;
     }
-    &._in-stock {
+    &._green {
         color: var(--green-color);
         &:before {
             background-color: var(--green-color);
         }
     }
-    &._out-stock {
+    &._red {
         color: var(--red-color);
         &:before {
             background-color: var(--red-color);
+        }
+    }
+    &._orange {
+        color: var(--star-color);
+        &:before {
+            background-color: var(--star-color);
+        }
+    }
+    &._dark_orange {
+        color: var(--darked-star-color);
+        &:before {
+            background-color: var(--darked-star-color);
         }
     }
 }

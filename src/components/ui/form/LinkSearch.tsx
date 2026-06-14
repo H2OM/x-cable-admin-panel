@@ -1,6 +1,6 @@
 import type {ReactNode} from "react";
 import {Button, Card, Form, Space} from "antd";
-import TagSearchSelect from "@components/ui/TagSearchSelect.tsx";
+import TagSearchSelect from "@components/ui/form/TagSearchSelect.tsx";
 import {CheckOutlined, SwapOutlined} from "@ant-design/icons";
 
 export default function LinkSearch({title, placeholder, divider = <SwapOutlined/>, callback, loading, submit}: {

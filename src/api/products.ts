@@ -46,6 +46,17 @@ export const update = async (data: FormData) => {
     }))
 }
 
+export const add = async (data: FormData) => {
+    return await _FETCH.progressTrackingRequest(({
+        url: `${API_URL}/add`,
+        options: {
+            method: "POST",
+            body: data
+        },
+        json: false
+    }))
+}
+
 export const oneWayPairVariations = async (data: {
     ids: number[];
     variations_ids: number[];

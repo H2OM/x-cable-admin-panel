@@ -14,10 +14,10 @@ import {useEffect, useState} from "react";
 import type {Product} from "@/types/products.ts";
 import {productsAPI} from "@api";
 import {Link, useSearchParams} from "react-router-dom";
-import {gridMenuItems, selectProductGridMenuItems} from "@constants/gridMenuItems.tsx";
+import {gridMenuItems} from "@constants/menuItems/gridMenuItems.tsx";
 import SelectActions from "@components/ui/grid/SelectActions.tsx";
 import ContextMenu from "@components/ui/grid/ContextMenu.tsx";
-import {productMenuItems} from "@constants/productMenuItems.tsx";
+import {productsMenuItems, productsGridMenuItems} from "@constants/menuItems/productsMenuItems.tsx";
 
 const SITE_URL = import.meta.env.VITE_PUBLIC_SITE_URL;
 const IMAGES_URL = import.meta.env.VITE_PUBLIC_SITE_IMAGES_URL;
@@ -106,16 +106,14 @@ export default function ProductsGrid() {
 
     const deleteProductsHandler = async (ids: number[]) => {
         setLoading(true);
-
         const response = await productsAPI.deleteMany(ids);
-
         setLoading(false);
 
         if(response.success) {
             setProducts(prev => prev.filter(p => !ids.includes(p.id)));
-        }
 
-        void fetchProducts();
+            void fetchProducts();
+        }
 
         return response;
     }
@@ -124,9 +122,7 @@ export default function ProductsGrid() {
         callback: () => Promise<Record<string, string>>
     )=> {
         setLoading(true);
-
         const response = await callback();
-
         setLoading(false);
 
         if(response.success) {
@@ -174,10 +170,9 @@ export default function ProductsGrid() {
                             setSelectMode(false);
 
                         }}
-                        deleteHandler={contextDeleteProductsHandler}
                     >
                         <ContextMenu
-                            menuItems={selectProductGridMenuItems}
+                            menuItems={productsGridMenuItems}
                             handlers={{
                                 pair_variant: pairVariationsHandler,
                                 pair_related: pairRelatedHandler,
@@ -247,7 +242,7 @@ export default function ProductsGrid() {
                                         <DeleteOutlined style={{color: 'var(--ant-color-error)'}}/>
                                     </Popconfirm>,
                                     <ContextMenu
-                                        menuItems={productMenuItems}
+                                        menuItems={productsMenuItems}
                                         handlers={{}}
                                     />
                                 ]}
@@ -297,8 +292,8 @@ export default function ProductsGrid() {
                                 <p className="text-clamp">Бренд: {product.brand}</p>
                                 <p className="text-clamp">Артикул: {product.article}</p>
                                 <p className="text-clamp">Категория: {product.category}</p>
-                                <p className="text-clamp">Хит: {product.hit ? 'Да' : 'Нет'}</p>
-                                <p className={'stock' + (product.stock > 0 ? ' _in-stock' : ' _out-stock')}>
+                                <p className="text-clamp">Хит: {Number(product.hit) ? 'Да' : 'Нет'}</p>
+                                <p className={'dot' + (product.stock > 0 ? ' _green' : ' _red')}>
                                     Наличие: {product.stock} {product.unit}
                                 </p>
                             </Card>

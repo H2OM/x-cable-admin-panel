@@ -14,7 +14,6 @@ export default function SelectActions({
     maxCount: number;
     checkAllHandler: (e: CheckboxChangeEvent) => void;
     abortHandler: (e?: MouseEvent<HTMLElement>) => void;
-    deleteHandler: () => void;
 }) {
     const checkAll = maxCount === selected.length;
     const indeterminate = selected.length > 0 && selected.length < maxCount;

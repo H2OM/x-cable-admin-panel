@@ -13,6 +13,10 @@ import ProtectedRoute from "@components/router/ProtectedRoute.tsx";
 import ProductsGrid from "@pages/products/ProductsGrid.tsx";
 import ProductAdd from "@pages/products/ProductAdd.tsx";
 import ProductEdit from "@pages/products/ProductEdit.tsx";
+import BrandsGrid from "@pages/brands/BrandsGrid.tsx";
+import OrdersGrid from "@pages/orders/OrdersGrid.tsx";
+import CategoriesGrid from "@pages/categories/CategoriesGrid.tsx";
+import FiltersGrid from "@pages/filters/FiltersGrid.tsx";
 
 export default function App() {
     return (
@@ -36,6 +40,18 @@ export default function App() {
                                         <Route path={"/products/edit/:id"} element={<ProductEdit/>}/>
                                         <Route path={"/products/fast-actions"} element={<ProductsFastActions/>}/>
                                     </Route>
+                                </Route>
+                                <Route element={<ProtectedRoute permission={'categories'}/>}>
+                                    <Route path={"/categories"} element={<CategoriesGrid/>}/>
+                                </Route>
+                                <Route element={<ProtectedRoute permission={'filters'}/>}>
+                                    <Route path={"/filters"} element={<FiltersGrid/>}/>
+                                </Route>
+                                <Route element={<ProtectedRoute permission={'orders'}/>}>
+                                    <Route path={"/orders"} element={<OrdersGrid/>}/>
+                                </Route>
+                                <Route element={<ProtectedRoute permission={'brands'}/>}>
+                                    <Route path={"/brands"} element={<BrandsGrid/>}/>
                                 </Route>
                                 <Route element={<ProtectedRoute permission={'parsers'}/>}>
                                     <Route path={"/parsers/anlan"} element={<ParserAnlan/>}/>

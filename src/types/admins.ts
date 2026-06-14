@@ -1,4 +1,4 @@
-export interface User {
+export interface Admins {
     id: number;
     name: string;
     email: string;
@@ -6,10 +6,10 @@ export interface User {
     last_login: string;
     role: string;
     role_code: string;
-    permissions: UserPermissions[];
+    permissions: AdminPermissions[];
 }
 
-export interface UserPermissions {
+export interface AdminPermissions {
     id: number;
     name: string;
     code: string;

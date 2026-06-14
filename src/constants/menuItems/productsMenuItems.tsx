@@ -1,16 +1,16 @@
-import {CheckSquareOutlined, DeleteOutlined, DislikeOutlined, StarOutlined, SwapOutlined} from "@ant-design/icons";
+import {CopyOutlined, DeleteOutlined, DislikeOutlined, StarOutlined, SwapOutlined} from "@ant-design/icons";
 import type {ItemType} from "antd/es/menu/interface";
 import {Popconfirm} from "antd";
 
-export const gridMenuItems: ItemType[] = [
+export const productsMenuItems: ItemType[] = [
     {
-        key: 'select',
-        label: 'Выбрать несколько',
-        icon:  <CheckSquareOutlined />,
+        key: 'duplicate',
+        label: 'Дублировать товар',
+        icon: <CopyOutlined />,
     }
 ];
 
-export const selectProductGridMenuItems: ItemType[] = [
+export const productsGridMenuItems: ItemType[] = [
     {
         key: 'pair_related',
         label: 'Связывание',

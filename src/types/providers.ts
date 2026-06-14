@@ -1,9 +1,9 @@
-import type {User} from "./user.ts";
+import type {Admins} from "./admins.ts";
 
 export default interface ProviderAuth {
-    user: User | null;
+    user: Admins | null;
     isAuthenticated: boolean;
     isPending: boolean;
-    login: (token: string, user: User) => void;
+    login: (token: string, user: Admins) => void;
     logout: () => void;
 }

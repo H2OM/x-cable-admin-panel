@@ -70,6 +70,18 @@ export const menuItems: MenuItems[] = [
         ]
     },
     {
+        key: '/brands-group',
+        icon: <BarcodeOutlined/>,
+        label: 'Бренды',
+        children: [
+            {
+                key: '/brands',
+                icon: <TableOutlined/>,
+                label: <Link to="/filters">Все бренды</Link>,
+            }
+        ]
+    },
+    {
         key: '/callbacks-group',
         icon: <FormOutlined/>,
         label: 'Формы обратной связи',
@@ -121,11 +133,6 @@ export const menuItems: MenuItems[] = [
                 label: <Link to="/orders/delivery">Способы доставки</Link>,
             }
         ]
-    },
-    {
-        key: '/brands',
-        icon: <BarcodeOutlined/>,
-        label: <Link to="/brands">Бренды</Link>
     },
     {
         key: '/users',

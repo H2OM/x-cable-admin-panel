@@ -1,5 +1,5 @@
 import {createContext, type ReactNode, useEffect, useState} from "react";
-import type {User} from "@_types/user";
+import type {Admins} from "@/types/admins.ts";
 import {authAPI} from "@api";
 import _FETCH from "@utils/_FETCH";
 import type ProviderAuth from "@_types/providers.ts";
@@ -7,7 +7,7 @@ import type ProviderAuth from "@_types/providers.ts";
 const AuthContext = createContext<ProviderAuth | null>(null);
 
 export const AuthProvider = ({children}: { children: ReactNode }) => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<Admins | null>(null);
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [isPending, setIsPending] = useState<boolean>(true);
 
@@ -32,7 +32,7 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
         })();
     }, []);
 
-    const login = (token: string, userData: User) => {
+    const login = (token: string, userData: Admins) => {
         _FETCH.setToken(token);
         localStorage.setItem("admin_token", token);
 
