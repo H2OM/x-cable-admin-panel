@@ -17,6 +17,7 @@ import BrandsGrid from "@pages/brands/BrandsGrid.tsx";
 import OrdersGrid from "@pages/orders/OrdersGrid.tsx";
 import CategoriesGrid from "@pages/categories/CategoriesGrid.tsx";
 import FiltersGrid from "@pages/filters/FiltersGrid.tsx";
+import BannersGrid from "@pages/banners/BannersGrid.tsx";
 
 export default function App() {
     return (
@@ -52,6 +53,9 @@ export default function App() {
                                 </Route>
                                 <Route element={<ProtectedRoute permission={'brands'}/>}>
                                     <Route path={"/brands"} element={<BrandsGrid/>}/>
+                                </Route>
+                                <Route element={<ProtectedRoute permission={'banners'}/>}>
+                                    <Route path={"/banners"} element={<BannersGrid/>}/>
                                 </Route>
                                 <Route element={<ProtectedRoute permission={'parsers'}/>}>
                                     <Route path={"/parsers/anlan"} element={<ParserAnlan/>}/>

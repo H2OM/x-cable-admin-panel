@@ -1,15 +1,15 @@
+import {Link, useSearchParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import type {Filter} from "@/types/filters.ts";
+import {filtersAPI} from "@api";
 import {Card, Checkbox, type CheckboxChangeEvent, Collapse, List, Skeleton, Space, Spin, Typography} from "antd";
 import SelectActions from "@components/ui/grid/SelectActions.tsx";
 import ContextMenu from "@components/ui/grid/ContextMenu.tsx";
-import {gridMenuItems} from "@constants/menuItems/gridMenuItems.tsx";
-import {Link, useSearchParams} from "react-router-dom";
-import {EditOutlined} from "@ant-design/icons";
-import {useEffect, useState} from "react";
-import {filtersAPI} from "@api";
-import type {Filter} from "@/types/filters.ts";
 import {filterMenuItems, filtersGridMenuItems} from "@constants/menuItems/filtersMenuItems.tsx";
+import {gridMenuItems} from "@constants/menuItems/gridMenuItems.tsx";
+import {EditOutlined} from "@ant-design/icons";
 
-export default function FiltersGrid() {
+export default function CallbacksGrid() {
     const [searchParams, setSearchParams] = useSearchParams();
     const page = parseInt(searchParams.get('page') || '1', 10);
     const limit = parseInt(searchParams.get('limit') || '15', 10);
@@ -72,7 +72,7 @@ export default function FiltersGrid() {
         const response = await filtersAPI.deleteMany(ids);
         setLoading(false);
 
-        if(response.success) {
+        if (response.success) {
             setItems(prev => prev.filter(item => !ids.includes(item.id)));
 
             void fetchItems();
@@ -83,12 +83,12 @@ export default function FiltersGrid() {
 
     const selectedAction = async (
         callback: () => Promise<Record<string, string>>
-    )=> {
+    ) => {
         setLoading(true);
         const response = await callback();
         setLoading(false);
 
-        if(response.success) {
+        if (response.success) {
             setSelected([]);
             setSelectMode(false);
         }
@@ -134,7 +134,7 @@ export default function FiltersGrid() {
                 }
             </Space>
             {loading && items.length > 0 &&
-                <div className="load-screen"><Spin size="large" description={"Загрузка..."} /></div>
+                <div className="load-screen"><Spin size="large" description={"Загрузка..."}/></div>
             }
             <List
                 grid={{gutter: ['10px', '10px'], xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 1, xxxl: 1}}
@@ -153,7 +153,7 @@ export default function FiltersGrid() {
                     onChange: handlePageChange
                 }}
                 renderItem={(item) => (
-                    <List.Item style={{ margin: 0 }}>
+                    <List.Item style={{margin: 0}}>
                         {loading && items.length === 0 ? (
                             <Card style={{width: '100%', height: '320px'}}>
                                 <Skeleton active paragraph={{rows: 1}}/>
@@ -161,7 +161,7 @@ export default function FiltersGrid() {
                         ) : (
                             <Card style={{width: '100%'}}
                                   actions={[
-                                      <Link to={`/filters/edit/${item.id}`}><EditOutlined key="edit" /></Link>,
+                                      <Link to={`/filters/edit/${item.id}`}><EditOutlined key="edit"/></Link>,
                                       <ContextMenu
                                           menuItems={filterMenuItems}
                                           handlers={{

@@ -77,7 +77,7 @@ export const menuItems: MenuItems[] = [
             {
                 key: '/brands',
                 icon: <TableOutlined/>,
-                label: <Link to="/filters">Все бренды</Link>,
+                label: <Link to="/brands">Все бренды</Link>,
             }
         ]
     },
@@ -101,7 +101,7 @@ export const menuItems: MenuItems[] = [
             {
                 key: '/banners',
                 icon: <TableOutlined/>,
-                label: <Link to="/callbacks">Все баннеры</Link>,
+                label: <Link to="/banners">Все баннеры</Link>,
             }
         ]
     },
@@ -131,6 +131,11 @@ export const menuItems: MenuItems[] = [
                 key: '/orders/delivery',
                 icon: <SnippetsOutlined/>,
                 label: <Link to="/orders/delivery">Способы доставки</Link>,
+            },
+            {
+                key: '/orders/payment',
+                icon: <SnippetsOutlined/>,
+                label: <Link to="/orders/payment">Способы оплаты</Link>,
             }
         ]
     },

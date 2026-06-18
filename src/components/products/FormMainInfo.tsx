@@ -79,7 +79,11 @@ export default function FormMainInfo() {
             </Space.Compact>
             <br/>
             <Space.Compact>
-                <Form.Item label="Остаток" name={'stock'}>
+                <Form.Item
+                    label="Остаток"
+                    name={'stock'}
+                    rules={[{ required: true, message: 'Укажите остаток' }]}
+                >
                     <InputNumber min={0} style={{ width: 130 }}  placeholder={"0"}/>
                 </Form.Item>
                 <Form.Item

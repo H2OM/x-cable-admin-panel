@@ -154,8 +154,19 @@ export default function ProductsGrid() {
     return (
         <div>
             <Space style={{marginBottom: '30px', alignItems: "center"}}>
-                <Typography.Title level={2} style={{margin: 0, marginBottom: '6px'}}>
+                <Typography.Title level={2} style={{margin: 0, marginBottom: '6px', marginRight: 22, position: "relative"}}>
                     Все товары
+                    <span
+                        style={{
+                            color: 'var(--ant-color-icon)',
+                            fontSize: 14,
+                            position: "absolute",
+                            top: -6,
+                            right: -28
+                        }}
+                    >
+                        ({count})
+                    </span>
                 </Typography.Title>
 
                 {selectMode ?
