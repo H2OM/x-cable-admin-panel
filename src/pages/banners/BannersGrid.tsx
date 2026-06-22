@@ -26,7 +26,7 @@ export default function BannersGrid() {
     }, []);
 
     return (
-        <div>
+        <div style={{position: 'relative'}}>
             <Space style={{marginBottom: '30px', alignItems: "center"}}>
                 <Typography.Title level={2} style={{margin: 0, marginBottom: '6px'}}>
                     Все баннеры

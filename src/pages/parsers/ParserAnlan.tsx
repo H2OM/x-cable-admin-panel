@@ -38,7 +38,7 @@ export default function ParserAnlan() {
     }
 
     return (
-        <div>
+        <div style={{position: 'relative'}}>
             <Typography.Title level={2} style={{margin: 0, marginBottom: '30px'}}>
                 Выгрузка товаров с сайта АнЛан
             </Typography.Title>

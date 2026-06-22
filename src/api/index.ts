@@ -8,5 +8,18 @@ import * as filtersAPI from './filters';
 import * as brandsAPI from './brands';
 import * as bannersAPI from './banners';
 import * as callbacksAPI from './callbacks';
+import * as statisticAPI from './statisctic';
 
-export {userAPI, authAPI, parserAPI, categoriesAPI, productsAPI, ordersAPI, filtersAPI, brandsAPI, bannersAPI, callbacksAPI};
+export {
+    userAPI,
+    authAPI,
+    parserAPI,
+    categoriesAPI,
+    productsAPI,
+    ordersAPI,
+    filtersAPI,
+    brandsAPI,
+    bannersAPI,
+    callbacksAPI,
+    statisticAPI
+};

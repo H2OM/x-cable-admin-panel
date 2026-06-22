@@ -152,7 +152,7 @@ export default function ProductsGrid() {
     }
 
     return (
-        <div>
+        <div style={{position: 'relative'}}>
             <Space style={{marginBottom: '30px', alignItems: "center"}}>
                 <Typography.Title level={2} style={{margin: 0, marginBottom: '6px', marginRight: 22, position: "relative"}}>
                     Все товары
@@ -287,19 +287,24 @@ export default function ProductsGrid() {
                                     {product.title}
                                 </p>
                                 <Card.Meta
-                                    title={product.price.toLocaleString('ru-RU', {
-                                        style: 'currency',
-                                        currency: 'RUB',
-                                    })}
+                                    title={
+                                        <>
+                                            {product.price.toLocaleString('ru-RU', {
+                                                style: 'currency',
+                                                currency: 'RUB',
+                                            })}&nbsp;&nbsp;
+                                            {product.price_old ?
+                                                <s>
+                                                    {product.price_old.toLocaleString('ru-RU', {
+                                                        style: 'currency',
+                                                        currency: 'RUB',
+                                                    })}
+                                                </s>
+                                                : null
+                                            }
+                                        </>
+                                    }
                                 />
-                                {product.price_old ?
-                                    <p>
-                                        Старая цена: {product.price_old.toLocaleString('ru-RU', {
-                                            style: 'currency',
-                                            currency: 'RUB',
-                                        })}
-                                    </p> : null
-                                }
                                 <p className="text-clamp">Бренд: {product.brand}</p>
                                 <p className="text-clamp">Артикул: {product.article}</p>
                                 <p className="text-clamp">Категория: {product.category}</p>
