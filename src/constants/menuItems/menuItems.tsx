@@ -10,9 +10,9 @@ import {
     ShoppingOutlined,
     SnippetsOutlined,
     TableOutlined,
-    TeamOutlined,
+    // TeamOutlined,
     ThunderboltOutlined,
-    UserOutlined
+    // UserOutlined
 } from "@ant-design/icons";
 import {Link} from "react-router-dom";
 import type {MenuItems} from "@/types/common.ts";
@@ -139,14 +139,14 @@ export const menuItems: MenuItems[] = [
             }
         ]
     },
-    {
-        key: '/users',
-        icon: <TeamOutlined/>,
-        label: <Link to="/users">Учет пользователей</Link>
-    },
-    {
-        key: '/admins',
-        icon: <UserOutlined/>,
-        label: <Link to="/admins">Учет администраторов</Link>
-    },
+    // {
+    //     key: '/users',
+    //     icon: <TeamOutlined/>,
+    //     label: <Link to="/users">Учет пользователей</Link>
+    // },
+    // {
+    //     key: '/admins',
+    //     icon: <UserOutlined/>,
+    //     label: <Link to="/admins">Учет администраторов</Link>
+    // },
 ];
